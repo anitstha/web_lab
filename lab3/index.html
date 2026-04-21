@@ -1,106 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Validation</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Lab 3 - Styled Form Validation</title>
+    <style>
+        body {
+            font: 14px 'Segoe UI', sans-serif;
+            background: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        .checkbox-group {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4A90E2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #357ABD;
+        }
+
+        #errorMsg {
+            color: #e74c3c;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 10px;
+            min-height: 1.2em;
+        }
+    </style>
 </head>
+
 <body>
+
     <div class="form-container">
-        <h2>User Registration</h2>
-        <form id="registrationForm" onsubmit="return validateForm(event)">
+        <h2>Join Us Today...</h2>
+        <form id="registrationForm" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter username (min 4 chars)">
-                <span class="error" id="usernameError"></span>
+                <input type="text" id="username" placeholder="Min. 4 characters">
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder=" Must start with digit, end with #">
-                <span class="error" id="passwordError"></span>
+                <input type="password" id="password" placeholder="e.g. 1Abc#">
             </div>
 
             <div class="form-group">
-                <label>Education</label>
+                <label>Education Level</label>
                 <div class="checkbox-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="education" value="highschool">
-                        High School
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="education" value="High School"> High School
                     </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="education" value="bachelors">
-                        Bachelor's Degree
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="education" value="Undergraduate"> Undergraduate
                     </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="education" value="masters">
-                        Master's Degree
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="education" value="phd">
-                        PhD
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="education" value="Postgraduate"> Postgraduate
                     </label>
                 </div>
-                <span class="error" id="educationError"></span>
             </div>
 
-            <button type="submit" class="submit-btn">Submit</button>
-            <span class="success" id="successMessage"></span>
+            <button type="submit">Register</button>
+            <div id="errorMsg"></div>
         </form>
     </div>
 
     <script>
-        function validateForm(event) {
-            event.preventDefault();
-            
-            let isValid = true;
-            
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            const educationCheckboxes = document.querySelectorAll('input[name="education"]:checked');
-            
-            document.getElementById('usernameError').textContent = '';
-            document.getElementById('passwordError').textContent = '';
-            document.getElementById('educationError').textContent = '';
-            document.getElementById('successMessage').textContent = '';
-            
-            if (!username) {
-                document.getElementById('usernameError').textContent = 'Username is required';
-                isValid = false;
-            } else if (username.length < 4) {
-                document.getElementById('usernameError').textContent = 'Username must be at least 4 characters';
-                isValid = false;
+        function validateForm() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const checkboxes = document.querySelectorAll('input[name="education"]:checked');
+            const errorMsg = document.getElementById("errorMsg");
+
+            // Clear previous errors
+            errorMsg.innerHTML = "";
+
+            // Rule 1: All fields required
+            if (!username || !password || checkboxes.length === 0) {
+                errorMsg.innerHTML = "Error: All fields are required.";
+                return false;
             }
-            
-            if (!password) {
-                document.getElementById('passwordError').textContent = 'Password is required';
-                isValid = false;
-            } else {
-                const firstChar = password.charAt(0);
-                const lastChar = password.charAt(password.length - 1);
-                
-                if (!/^\d/.test(password)) {
-                    document.getElementById('passwordError').textContent = 'Password must start with a digit';
-                    isValid = false;
-                } else if (lastChar !== '#') {
-                    document.getElementById('passwordError').textContent = 'Password must end with #';
-                    isValid = false;
-                }
+
+            // Rule 2: Username length (at least 4)
+            if (username.length < 4) {
+                errorMsg.innerHTML = "Username must be at least 4 characters";
+                return false;
             }
-            
-            if (educationCheckboxes.length === 0) {
-                document.getElementById('educationError').textContent = 'Select at least one education field';
-                isValid = false;
+
+            // Rule 3: Password start with digit, end with #
+            const passRegex = /^\d.*#$/;
+            if (!passRegex.test(password)) {
+                errorMsg.innerHTML = "Error: Password must start with a digit and end with #.";
+                return false;
             }
-            
-            if (isValid) {
-                document.getElementById('successMessage').textContent = 'Form submitted successfully!';
-                document.getElementById('registrationForm').reset();
-            }
-            
-            return false;
+
+            alert("Validation successful!");
+            return true;
         }
     </script>
+
 </body>
+
 </html>

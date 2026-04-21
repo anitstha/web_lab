@@ -1,0 +1,35 @@
+body {
+    height: 100vh;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background-image: url("https://images.pexels.com/photos/788891/pexels-photo-788891.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 {
+    color: rgb(126, 6, 90);
+}
+
+p {
+    font-family: "Courier New", monospace;
+    font-style: italic;
+    font-size: 30px;
+}
+
+/* Link styles */
+a:link {
+    color: blue;
+}
+
+a:hover {
+    color: red;
+}
+
+a:visited {
+    color: purple;
+}
+
+a:active {
+    color: green;
+}

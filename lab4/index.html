@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country and Capital Selector</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Country and Capital Selector</h1>
+        <label for="country">Select a Country:</label>
+        <select id="country">
+            <option value="">-- Select --</option>
+            <option value="Paris">France</option>
+            <option value="Tokyo">Japan</option>
+            <option value="Berlin">Germany</option>
+            <option value="Canberra">Australia</option>
+            <option value="Ottawa">Canada</option>
+        </select>
+        <p id="capital-display" class="capital"></p>
+    </div>
+    <script>
+        document.getElementById('country').addEventListener('change', function() {
+            var capitalDisplay = document.getElementById('capital-display');
+            if (this.value) {
+                capitalDisplay.textContent = 'Capital: ' + this.value;
+            } else {
+                capitalDisplay.textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>
