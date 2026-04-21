@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 2 - HTML Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>User Registration Form</h2>
+
+        <form>
+
+            <!-- Text Fields -->
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="fullname" required>
+            </div>
+
+            <!-- Radio Buttons -->
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="gender" value="male"> Male</label>
+                    <label><input type="radio" name="gender" value="female"> Female</label>
+                </div>
+            </div>
+
+            <!-- Dropdown -->
+            <div class="form-group">
+                <label>Country</label>
+                <select name="country">
+                    <option value="">Select Country</option>
+                    <option value="nepal">Nepal</option>
+                    <option value="india">India</option>
+                    <option value="usa">Japan</option>
+                </select>
+            </div>
+
+            <!-- Checkboxes -->
+            <div class="form-group">
+                <label>Interests</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="interest" value="coding"> Coding</label>
+                    <label><input type="checkbox" name="interest" value="gaming"> Reading</label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button class="submit-btn" type="submit">Submit</button>
+
+        </form>
+    </div>
+
+</body>
+
+</html>
